@@ -6,6 +6,7 @@ import CategorySelector from "@/components/category-selector"
 import Header from "@/components/header"
 import { categories } from "@/lib/data"
 import type { Card } from "@/lib/types"
+import { motion } from "framer-motion"
 
 export default function CardsPage() {
   const [selectedCategory, setSelectedCategory] = useState(categories[0])
@@ -71,7 +72,15 @@ export default function CardsPage() {
               <CardDeck category={selectedCategory} isShuffleMode={false} shuffledCards={[]} />
             </div>
           ) : (
-            <CardDeck category={selectedCategory} isShuffleMode={isShuffleMode} shuffledCards={shuffledCards} />
+            <motion.div
+              key={`${selectedCategory.id}-${isShuffleMode ? "shuffle" : "normal"}`}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="w-full"
+            >
+              <CardDeck category={selectedCategory} isShuffleMode={isShuffleMode} shuffledCards={shuffledCards} />
+            </motion.div>
           )}
         </div>
 

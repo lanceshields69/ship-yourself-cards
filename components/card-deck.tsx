@@ -118,11 +118,11 @@ export default function CardDeck({ category, isShuffleMode, shuffledCards }: Car
             // Mobile: Stacked card view with animation and swipe functionality
             <AnimatePresence mode="wait">
               <motion.div
-                key={currentIndex}
+                key={`${currentIndex}-${category.id}-${isShuffleMode ? "shuffle" : "normal"}`}
                 className="relative w-full h-full"
                 initial={{
                   opacity: 0,
-                  x: animationDirection === "left" ? 50 : animationDirection === "right" ? -50 : 0,
+                  x: animationDirection === "left" ? 50 : animationDirection === "right" ? -50 : 30,
                 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: animationDirection === "left" ? -50 : animationDirection === "right" ? 50 : 0 }}
@@ -171,7 +171,11 @@ export default function CardDeck({ category, isShuffleMode, shuffledCards }: Car
             </AnimatePresence>
           ) : (
             // Desktop: Carousel-style animation with smooth sliding
-            <div
+            <motion.div
+              key={`${category.id}-${isShuffleMode ? "shuffle" : "normal"}`}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
               className="overflow-visible pt-[30px]"
               style={{
                 width: "1200px",
@@ -212,7 +216,7 @@ export default function CardDeck({ category, isShuffleMode, shuffledCards }: Car
                   </div>
                 ))}
               </motion.div>
-            </div>
+            </motion.div>
           )}
         </div>
       </div>
