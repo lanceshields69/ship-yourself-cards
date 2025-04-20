@@ -357,7 +357,7 @@ export const categories: Category[] = [
           "Translate design decisions into business outcomes.",
           "Build a coalition of supporters across departments.",
         ],
-        quote: "Leadership is not about titles, positions, or flowcharts. It is about one life influencing another.",
+        quote: "Leadership is not about titles, positions, or flowcharts. It is about one life influencing another",
         quoteAuthor: "John C. Maxwell",
       },
       {
@@ -830,7 +830,7 @@ export const categories: Category[] = [
         category: "Power-Ups",
         title: "Power of Side Projects",
         subtitle: "Build what you want to be hired for.",
-        backgroundColor: "#D1C4E9", // Light purple
+        backgroundColor: "#ABFBC5", // Updated to mint color
         icon: <Zap className="h-6 w-6" />,
         bulletPoints: [
           "Create the work you wish you were assigned.",
@@ -845,7 +845,7 @@ export const categories: Category[] = [
         category: "Power-Ups",
         title: "Reframe Rejection",
         subtitle: "Not now doesn't mean not ever.",
-        backgroundColor: "#D1C4E9", // Light purple
+        backgroundColor: "#ABFBC5", // Updated to mint color
         icon: <Shield className="h-6 w-6" />,
         bulletPoints: [
           "Ask for specific feedback after every rejection.",
@@ -860,7 +860,7 @@ export const categories: Category[] = [
         category: "Power-Ups",
         title: "Design Your Support System",
         subtitle: "You can't do this alone.",
-        backgroundColor: "#D1C4E9", // Light purple
+        backgroundColor: "#ABFBC5", // Updated to mint color
         icon: <Heart className="h-6 w-6" />,
         bulletPoints: [
           "Identify your cheerleaders, mentors, and accountability partners.",
@@ -875,7 +875,7 @@ export const categories: Category[] = [
         category: "Power-Ups",
         title: "Financial Runway",
         subtitle: "Freedom to choose requires planning.",
-        backgroundColor: "#D1C4E9", // Light purple
+        backgroundColor: "#ABFBC5", // Updated to mint color
         icon: <DollarSign className="h-6 w-6" />,
         bulletPoints: [
           "Calculate your minimum monthly expenses.",
@@ -890,7 +890,7 @@ export const categories: Category[] = [
         category: "Power-Ups",
         title: "Decision Framework",
         subtitle: "Clarity comes from process.",
-        backgroundColor: "#D1C4E9", // Light purple
+        backgroundColor: "#ABFBC5", // Updated to mint color
         icon: <Compass className="h-6 w-6" />,
         bulletPoints: [
           "List your non-negotiables vs. nice-to-haves.",
@@ -905,7 +905,7 @@ export const categories: Category[] = [
         category: "Power-Ups",
         title: "Energy Management",
         subtitle: "Protect your most valuable resource.",
-        backgroundColor: "#D1C4E9", // Light purple
+        backgroundColor: "#ABFBC5", // Updated to mint color
         icon: <Zap className="h-6 w-6" />,
         bulletPoints: [
           "Track your energy levels throughout the day.",
@@ -920,7 +920,7 @@ export const categories: Category[] = [
         category: "Power-Ups",
         title: "Skill Stacking",
         subtitle: "Unique combinations create opportunity.",
-        backgroundColor: "#D1C4E9", // Light purple
+        backgroundColor: "#ABFBC5", // Updated to mint color
         icon: <Briefcase className="h-6 w-6" />,
         bulletPoints: [
           "Identify 2-3 complementary skills to your core expertise.",
@@ -936,7 +936,7 @@ export const categories: Category[] = [
         category: "Power-Ups",
         title: "Future-Proof Your Career",
         subtitle: "Anticipate change, don't react to it.",
-        backgroundColor: "#D1C4E9", // Light purple
+        backgroundColor: "#ABFBC5", // Updated to mint color
         icon: <Clock className="h-6 w-6" />,
         bulletPoints: [
           "Follow industry trends and emerging technologies.",

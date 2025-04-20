@@ -38,6 +38,11 @@ export default function NavigationMenu({ isOpen, onClose }: NavigationMenuProps)
       icon: "/images/ship-yourself-article.svg",
     },
     {
+      title: "Making of App",
+      href: "https://www.lanceshields.design/projects",
+      icon: "/images/making.svg",
+    },
+    {
       title: "About me",
       href: "https://www.lanceshields.design/about",
       icon: "/images/about-me.svg",
