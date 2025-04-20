@@ -1,9 +1,9 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import CardComponent from "@/components/card-component"
 import type { Category, Card } from "@/lib/types"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, type PanInfo } from "framer-motion"
 
 interface CardDeckProps {
   category: Category
@@ -18,6 +18,8 @@ export default function CardDeck({ category, isShuffleMode, shuffledCards }: Car
   const [flippedCardIndex, setFlippedCardIndex] = useState<number | null>(null)
   const [animationDirection, setAnimationDirection] = useState<"left" | "right" | null>(null)
   const [isAnimating, setIsAnimating] = useState(false)
+  const [hoveredArrow, setHoveredArrow] = useState<"left" | "right" | null>(null)
+  const carouselRef = useRef<HTMLDivElement>(null)
 
   // Card width + gap for desktop animation calculations
   const CARD_WIDTH = 366
@@ -82,36 +84,38 @@ export default function CardDeck({ category, isShuffleMode, shuffledCards }: Car
   const canGoNext = currentIndex < cardsToDisplay.length - (isMobile ? 1 : 3)
   const canGoPrev = currentIndex > 0
 
+  // Arrow colors - normal and hover (25% lighter)
+  const arrowColor = "#454545"
+  const arrowHoverColor = "#6A6A6A" // 25% lighter than #454545
+
   // SVG arrow components
   const LeftArrow = () => (
     <svg width="24" height="27" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M6.77527e-07 13.5L23.25 26.9234L23.25 0.0766057L6.77527e-07 13.5Z" fill="#454545" />
+      <path
+        d="M6.77527e-07 13.5L23.25 26.9234L23.25 0.0766057L6.77527e-07 13.5Z"
+        fill={hoveredArrow === "left" ? arrowHoverColor : arrowColor}
+        style={{ transition: "fill 0.2s ease" }}
+      />
     </svg>
   )
 
   const RightArrow = () => (
     <svg width="24" height="27" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M24 13.5L0.750001 26.9234L0.750002 0.0766057L24 13.5Z" fill="#454545" />
+      <path
+        d="M24 13.5L0.750001 26.9234L0.750002 0.0766057L24 13.5Z"
+        fill={hoveredArrow === "right" ? arrowHoverColor : arrowColor}
+        style={{ transition: "fill 0.2s ease" }}
+      />
     </svg>
   )
 
   return (
     <div className="w-full relative">
       <div className="flex justify-center items-center">
-        {/* Desktop navigation arrows positioned outside the cards */}
-        {!isMobile && (
-          <div
-            className={`absolute left-[-70px] cursor-pointer ${!canGoPrev ? "opacity-30 cursor-not-allowed" : ""}`}
-            onClick={canGoPrev ? prevCard : undefined}
-          >
-            <LeftArrow />
-          </div>
-        )}
-
         {/* Card display area */}
         <div className={`relative ${isMobile ? "w-[345px] h-[500px]" : "w-full flex justify-center"}`}>
           {isMobile ? (
-            // Mobile: Stacked card view with animation
+            // Mobile: Stacked card view with animation and swipe functionality
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
@@ -123,6 +127,18 @@ export default function CardDeck({ category, isShuffleMode, shuffledCards }: Car
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: animationDirection === "left" ? -50 : animationDirection === "right" ? 50 : 0 }}
                 transition={{ duration: 0.3 }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.7}
+                onDragEnd={(e, info: PanInfo) => {
+                  if (!isAnimating) {
+                    if (info.offset.x < -80 && canGoNext) {
+                      nextCard()
+                    } else if (info.offset.x > 80 && canGoPrev) {
+                      prevCard()
+                    }
+                  }
+                }}
               >
                 {/* Stacked background cards for visual effect */}
                 {visibleCards.length > 0 && (
@@ -156,12 +172,14 @@ export default function CardDeck({ category, isShuffleMode, shuffledCards }: Car
           ) : (
             // Desktop: Carousel-style animation with smooth sliding
             <div
-              className="overflow-hidden pt-[30px]"
+              className="overflow-visible pt-[30px]"
               style={{
                 width: "1200px",
-                marginBottom: "30px",
+                marginBottom: "20px",
                 marginLeft: "-12px",
+                paddingBottom: "10px",
               }}
+              ref={carouselRef}
             >
               <motion.div
                 className="flex"
@@ -197,35 +215,27 @@ export default function CardDeck({ category, isShuffleMode, shuffledCards }: Car
             </div>
           )}
         </div>
-
-        {/* Desktop right arrow */}
-        {!isMobile && (
-          <div
-            className={`absolute right-[-50px] cursor-pointer ${!canGoNext ? "opacity-30 cursor-not-allowed" : ""}`}
-            onClick={canGoNext ? nextCard : undefined}
-          >
-            <RightArrow />
-          </div>
-        )}
       </div>
 
-      {/* Mobile navigation arrows below the card */}
-      {isMobile && (
-        <div className="flex justify-center mt-6 gap-8">
-          <div
-            className={`cursor-pointer ${!canGoPrev ? "opacity-30 cursor-not-allowed" : ""}`}
-            onClick={canGoPrev ? prevCard : undefined}
-          >
-            <LeftArrow />
-          </div>
-          <div
-            className={`cursor-pointer ${!canGoNext ? "opacity-30 cursor-not-allowed" : ""}`}
-            onClick={canGoNext ? nextCard : undefined}
-          >
-            <RightArrow />
-          </div>
+      {/* Navigation arrows below the card for both mobile and desktop */}
+      <div className="flex justify-center mt-6 gap-8">
+        <div
+          className={`cursor-pointer ${!canGoPrev ? "opacity-30 cursor-not-allowed" : ""}`}
+          onClick={canGoPrev ? prevCard : undefined}
+          onMouseEnter={() => canGoPrev && setHoveredArrow("left")}
+          onMouseLeave={() => setHoveredArrow(null)}
+        >
+          <LeftArrow />
         </div>
-      )}
+        <div
+          className={`cursor-pointer ${!canGoNext ? "opacity-30 cursor-not-allowed" : ""}`}
+          onClick={canGoNext ? nextCard : undefined}
+          onMouseEnter={() => canGoNext && setHoveredArrow("right")}
+          onMouseLeave={() => setHoveredArrow(null)}
+        >
+          <RightArrow />
+        </div>
+      </div>
     </div>
   )
 }

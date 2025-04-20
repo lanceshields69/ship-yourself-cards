@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
 import type { Card as CardType } from "@/lib/types"
 import { getCategoryIcon } from "@/components/icons"
@@ -12,6 +13,8 @@ interface CardComponentProps {
 }
 
 export default function CardComponent({ card, categoryColor, isFlipped, onFlip }: CardComponentProps) {
+  const [isHovered, setIsHovered] = useState(false)
+
   // Get the appropriate icon based on the category
   const getIcon = () => {
     // Extract the category ID from the card's category name
@@ -36,7 +39,19 @@ export default function CardComponent({ card, categoryColor, isFlipped, onFlip }
   }
 
   return (
-    <div className="relative w-full h-[500px] perspective">
+    <motion.div
+      className="relative w-full h-[500px] perspective"
+      whileHover={{
+        y: -10,
+        transition: { duration: 0.2 },
+      }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      style={{
+        filter: isFlipped ? "drop-shadow(0 10px 15px rgba(0, 0, 0, 0.2))" : "drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))",
+        transition: "filter 0.5s ease-in-out",
+      }}
+    >
       <motion.div
         className="w-full h-full relative preserve-3d cursor-pointer"
         onClick={onFlip}
@@ -44,13 +59,23 @@ export default function CardComponent({ card, categoryColor, isFlipped, onFlip }
           rotateY: isFlipped ? 180 : 0,
           translateY: isFlipped ? -20 : 0,
         }}
-        transition={{ duration: 0.6, ease: "easeInOut" }}
+        transition={{
+          duration: 0.6,
+          ease: [0.16, 1, 0.3, 1], // Custom spring-like easing
+          // Add a subtle bounce at the end of the animation
+          type: "spring",
+          stiffness: 120,
+          damping: 15,
+        }}
         style={{ transformStyle: "preserve-3d" }}
       >
         {/* Front of card */}
         <div
-          className="absolute w-full h-full rounded-3xl p-8 flex flex-col backface-hidden shadow-md"
-          style={{ backgroundColor: card.backgroundColor }}
+          className="absolute w-full h-full rounded-3xl p-8 flex flex-col backface-hidden shadow-md transition-all duration-300"
+          style={{
+            backgroundColor: card.backgroundColor,
+            filter: isHovered && !isFlipped ? "brightness(1.05)" : "brightness(1)",
+          }}
         >
           <div className="flex justify-between items-start">
             <h3 className="text-lg font-medium" style={{ color: categoryColor }}>
@@ -74,8 +99,11 @@ export default function CardComponent({ card, categoryColor, isFlipped, onFlip }
 
         {/* Back of card */}
         <div
-          className="absolute w-full h-full rounded-3xl p-8 flex flex-col backface-hidden rotateY-180 shadow-md overflow-hidden"
-          style={{ backgroundColor: card.backgroundColor }}
+          className="absolute w-full h-full rounded-3xl p-8 flex flex-col backface-hidden rotateY-180 shadow-md overflow-hidden transition-all duration-300"
+          style={{
+            backgroundColor: card.backgroundColor,
+            filter: isHovered && isFlipped ? "brightness(1.05)" : "brightness(1)",
+          }}
         >
           <h3 className="text-xl font-medium mb-6" style={{ color: categoryColor }}>
             {card.title}
@@ -110,6 +138,6 @@ export default function CardComponent({ card, categoryColor, isFlipped, onFlip }
           )}
         </div>
       </motion.div>
-    </div>
+    </motion.div>
   )
 }

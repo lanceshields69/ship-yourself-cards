@@ -145,7 +145,12 @@ export default function CategorySelector({
             onClick={() => onSelectCategory(category)}
             className={`
               px-6 py-3 text-sm whitespace-pre-line rounded border min-w-[110px]
-              ${selectedCategory?.id === category.id && !isShuffleMode ? "bg-gray-100 border-gray-300" : "bg-white border-gray-200"}
+              transition-colors duration-200 ease-in-out
+              ${
+                selectedCategory?.id === category.id && !isShuffleMode
+                  ? "bg-gray-100 border-gray-300"
+                  : "bg-white border-gray-200 hover:bg-[#F9F9F9]"
+              }
             `}
           >
             {formatCategoryName(category.name)}
@@ -157,7 +162,8 @@ export default function CategorySelector({
           onClick={onShuffle}
           className={`
             px-6 py-3 text-sm whitespace-pre-line rounded border min-w-[110px] flex flex-col items-center justify-center
-            ${isShuffleMode ? "bg-gray-100 border-gray-300" : "bg-white border-gray-200"}
+            transition-colors duration-200 ease-in-out
+            ${isShuffleMode ? "bg-gray-100 border-gray-300" : "bg-white border-gray-200 hover:bg-[#F9F9F9]"}
           `}
         >
           <Image src="/images/shuffle-icon.svg" alt="Shuffle" width={19} height={16} className="mb-1" />
