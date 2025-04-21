@@ -1,18 +1,41 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import CardDeck from "@/components/card-deck"
 import CategorySelector from "@/components/category-selector"
 import Header from "@/components/header"
 import { categories } from "@/lib/data"
-import type { Card } from "@/lib/types"
+import type { Card, Category } from "@/lib/types"
 import { motion } from "framer-motion"
+import { useSearchParams } from "next/navigation"
+import DynamicMetaTags from "@/components/dynamic-meta-tags"
 
 export default function CardsPage() {
   const [selectedCategory, setSelectedCategory] = useState(categories[0])
   const [isShuffleMode, setIsShuffleMode] = useState(false)
   const [shuffledCards, setShuffledCards] = useState<Card[]>([])
   const [isShuffling, setIsShuffling] = useState(false)
+  const [initialCardId, setInitialCardId] = useState<string | null>(null)
+
+  const searchParams = useSearchParams()
+
+  // Handle deep linking on component mount
+  useEffect(() => {
+    const categoryParam = searchParams.get("category")
+    const cardIdParam = searchParams.get("cardId")
+
+    if (categoryParam) {
+      const foundCategory = categories.find((cat) => cat.id === categoryParam)
+      if (foundCategory) {
+        setSelectedCategory(foundCategory)
+        setIsShuffleMode(false)
+
+        if (cardIdParam) {
+          setInitialCardId(cardIdParam)
+        }
+      }
+    }
+  }, [searchParams])
 
   // Function to get random cards from all categories
   const getRandomCards = () => {
@@ -56,13 +79,15 @@ export default function CardsPage() {
   }
 
   // Handle category selection
-  const handleSelectCategory = (category: any) => {
+  const handleSelectCategory = (category: Category) => {
     setIsShuffleMode(false)
     setSelectedCategory(category)
+    setInitialCardId(null) // Reset initial card ID when changing categories
   }
 
   return (
     <main className="flex min-h-screen flex-col items-center bg-white">
+      <DynamicMetaTags />
       <Header />
 
       <div className="w-full max-w-6xl mx-auto px-4 py-6 md:py-8 flex flex-col h-[calc(100vh-64px)]">
@@ -79,7 +104,12 @@ export default function CardsPage() {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="w-full"
             >
-              <CardDeck category={selectedCategory} isShuffleMode={isShuffleMode} shuffledCards={shuffledCards} />
+              <CardDeck
+                category={selectedCategory}
+                isShuffleMode={isShuffleMode}
+                shuffledCards={shuffledCards}
+                initialCardId={initialCardId}
+              />
             </motion.div>
           )}
         </div>

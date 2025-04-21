@@ -9,6 +9,28 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Ship Yourself Cards",
   description: "Field Notes for Designers Redesigning Their Careers",
+  openGraph: {
+    title: "Ship Yourself Cards",
+    description: "Field Notes for Designers Redesigning Their Careers",
+    url: "https://shipyourselfcards.com",
+    siteName: "Ship Yourself Cards",
+    images: [
+      {
+        url: "/images/og-image.png", // You would need to create this image
+        width: 1200,
+        height: 630,
+        alt: "Ship Yourself Cards - Field Notes for Designers Redesigning Their Careers",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ship Yourself Cards",
+    description: "Field Notes for Designers Redesigning Their Careers",
+    images: ["/images/og-image.png"], // Same as OpenGraph image
+  },
     generator: 'v0.dev'
 }
 

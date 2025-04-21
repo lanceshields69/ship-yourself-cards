@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { usePathname } from "next/navigation"
 import LogoIcon from "@/components/logo-icon"
 import NavigationMenu from "@/components/navigation-menu"
+import ShareButton from "@/components/share-button"
 
 export default function Header() {
   const pathname = usePathname()
@@ -24,10 +25,13 @@ export default function Header() {
             <LogoIcon color={logoColor} width={30} height={30} />
             <span className="font-semibold">Ship Yourself Cards</span>
           </Link>
-          <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(true)} aria-label="Open menu">
-            <Menu className="h-6 w-6" />
-            <span className="sr-only">Menu</span>
-          </Button>
+          <div className="flex items-center gap-2">
+            <ShareButton />
+            <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(true)} aria-label="Open menu">
+              <Menu className="h-6 w-6" />
+              <span className="sr-only">Menu</span>
+            </Button>
+          </div>
         </div>
       </header>
 

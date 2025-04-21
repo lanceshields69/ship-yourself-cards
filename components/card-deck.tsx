@@ -4,14 +4,16 @@ import CardComponent from "@/components/card-component"
 import type { Category, Card } from "@/lib/types"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { motion, AnimatePresence, type PanInfo } from "framer-motion"
+// import ShareButton from "@/components/share-button"
 
 interface CardDeckProps {
   category: Category
   isShuffleMode: boolean
   shuffledCards: Card[]
+  initialCardId?: string | null
 }
 
-export default function CardDeck({ category, isShuffleMode, shuffledCards }: CardDeckProps) {
+export default function CardDeck({ category, isShuffleMode, shuffledCards, initialCardId = null }: CardDeckProps) {
   const isMobile = useMediaQuery("(max-width: 768px)")
   const [currentIndex, setCurrentIndex] = useState(0)
   const [visibleCards, setVisibleCards] = useState<Card[]>([])
@@ -29,11 +31,24 @@ export default function CardDeck({ category, isShuffleMode, shuffledCards }: Car
   // Get the cards to display based on mode
   const cardsToDisplay = isShuffleMode ? shuffledCards : category.cards
 
+  // Handle deep linking to a specific card
+  useEffect(() => {
+    if (initialCardId && !isShuffleMode) {
+      const cardIndex = cardsToDisplay.findIndex((card) => card.id === initialCardId)
+      if (cardIndex !== -1) {
+        setCurrentIndex(cardIndex)
+      }
+    }
+  }, [initialCardId, cardsToDisplay, isShuffleMode])
+
   useEffect(() => {
     // Reset current index when category changes or shuffle mode changes
-    setCurrentIndex(0)
+    // Only reset if not handling a deep link
+    if (!initialCardId) {
+      setCurrentIndex(0)
+    }
     setFlippedCardIndex(null)
-  }, [category, isShuffleMode, shuffledCards])
+  }, [category, isShuffleMode, shuffledCards, initialCardId])
 
   useEffect(() => {
     if (isMobile) {
@@ -108,6 +123,15 @@ export default function CardDeck({ category, isShuffleMode, shuffledCards }: Car
       />
     </svg>
   )
+
+  // Get share title based on current mode and category
+  // const getShareTitle = () => {
+  //   if (isShuffleMode) {
+  //     return "Check out my shuffled Ship Yourself Cards"
+  //   } else {
+  //     return `Check out the ${category.name} cards from Ship Yourself`
+  //   }
+  // }
 
   return (
     <div className="w-full relative">
@@ -221,8 +245,8 @@ export default function CardDeck({ category, isShuffleMode, shuffledCards }: Car
         </div>
       </div>
 
-      {/* Navigation arrows below the card for both mobile and desktop */}
-      <div className="flex justify-center mt-6 gap-8">
+      {/* Navigation arrows below the card */}
+      <div className="flex justify-center mt-6 gap-8 items-center">
         <div
           className={`cursor-pointer ${!canGoPrev ? "opacity-30 cursor-not-allowed" : ""}`}
           onClick={canGoPrev ? prevCard : undefined}
@@ -231,6 +255,7 @@ export default function CardDeck({ category, isShuffleMode, shuffledCards }: Car
         >
           <LeftArrow />
         </div>
+
         <div
           className={`cursor-pointer ${!canGoNext ? "opacity-30 cursor-not-allowed" : ""}`}
           onClick={canGoNext ? nextCard : undefined}

@@ -4,6 +4,8 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import type { Card as CardType } from "@/lib/types"
 import { getCategoryIcon } from "@/components/icons"
+// Update the import for CardShareButton
+import CardShareButton from "@/components/card-share-button-fixed"
 
 interface CardComponentProps {
   card: CardType
@@ -15,26 +17,22 @@ interface CardComponentProps {
 export default function CardComponent({ card, categoryColor, isFlipped, onFlip }: CardComponentProps) {
   const [isHovered, setIsHovered] = useState(false)
 
+  // Extract the category ID from the card's category name
+  const getCategoryId = () => {
+    if (card.category.toLowerCase().includes("mindset")) return "mindset"
+    if (card.category.toLowerCase().includes("networking")) return "networking"
+    if (card.category.toLowerCase().includes("super ic")) return "super-ic"
+    if (card.category.toLowerCase().includes("interview")) return "interviewing"
+    if (card.category.toLowerCase().includes("storytelling")) return "storytelling"
+    if (card.category.toLowerCase().includes("negotiation")) return "negotiation"
+    if (card.category.toLowerCase().includes("power-ups") || card.category.toLowerCase().includes("wild cards"))
+      return "wildcards"
+    return "wildcards"
+  }
+
   // Get the appropriate icon based on the category
   const getIcon = () => {
-    // Extract the category ID from the card's category name
-    const categoryId = card.category.toLowerCase().includes("mindset")
-      ? "mindset"
-      : card.category.toLowerCase().includes("networking")
-        ? "networking"
-        : card.category.toLowerCase().includes("super ic")
-          ? "super-ic"
-          : card.category.toLowerCase().includes("interview")
-            ? "interviewing"
-            : card.category.toLowerCase().includes("storytelling")
-              ? "storytelling"
-              : card.category.toLowerCase().includes("negotiation")
-                ? "negotiation"
-                : card.category.toLowerCase().includes("power-ups") ||
-                    card.category.toLowerCase().includes("wild cards")
-                  ? "wildcards"
-                  : "wildcards"
-
+    const categoryId = getCategoryId()
     return getCategoryIcon(categoryId, categoryColor, 56)
   }
 
@@ -95,6 +93,14 @@ export default function CardComponent({ card, categoryColor, isFlipped, onFlip }
               {card.subtitle}
             </p>
           </div>
+
+          {/* Add share button to the front of the card */}
+          <CardShareButton
+            cardId={card.id}
+            categoryId={getCategoryId()}
+            categoryColor={categoryColor}
+            cardTitle={card.title}
+          />
         </div>
 
         {/* Back of card */}
