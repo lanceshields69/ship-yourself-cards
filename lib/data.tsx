@@ -41,16 +41,6 @@ const getIconComponent = (iconName: string) => {
   return iconMap[iconName] || <Zap />
 }
 
-// Helper function to parse bullet points from tactical moves
-const parseBulletPoints = (tacticalMoves: string): string[] => {
-  if (!tacticalMoves) return []
-
-  return tacticalMoves
-    .split("-")
-    .filter((item) => item.trim().length > 0)
-    .map((item) => item.trim())
-}
-
 // Update the category colors to match the SVG icon colors
 export const categories: Category[] = [
   {

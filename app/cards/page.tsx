@@ -4,13 +4,15 @@ import { useState, useEffect } from "react"
 import CardDeck from "@/components/card-deck"
 import CategorySelector from "@/components/category-selector"
 import Header from "@/components/header"
-import { categories } from "@/lib/data"
+import { categoriesFromList } from "@/lib/data-from-list" // Import the exact data from the list
 import type { Card, Category } from "@/lib/types"
 import { motion } from "framer-motion"
 import { useSearchParams } from "next/navigation"
 import DynamicMetaTags from "@/components/dynamic-meta-tags"
 
 export default function CardsPage() {
+  // Use the exact data from the list
+  const categories = categoriesFromList
   const [selectedCategory, setSelectedCategory] = useState(categories[0])
   const [isShuffleMode, setIsShuffleMode] = useState(false)
   const [shuffledCards, setShuffledCards] = useState<Card[]>([])
