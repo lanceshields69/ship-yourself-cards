@@ -36,6 +36,65 @@ export default function CardComponent({ card, categoryColor, isFlipped, onFlip }
     return getCategoryIcon(categoryId, categoryColor, 56)
   }
 
+  // Get the "Go Deeper" link for mindset cards
+  const getGoDeeper = () => {
+    // Only show for mindset cards 1-10
+    if (!card.id.startsWith("mindset-")) return null
+
+    const cardNumber = Number.parseInt(card.id.split("-")[1])
+    if (cardNumber < 1 || cardNumber > 10) return null
+
+    // Define the links for each mindset card
+    const links = [
+      {
+        title: "James Clear: Motivation: The Scientific Guide on How to Get and Stay Motivated",
+        url: "https://jamesclear.com/motivation",
+      },
+      {
+        title: "Ryan Holiday: The Obstacle Is The Way",
+        url: "https://dailystoic.com/obstacle-is-the-way-summary/",
+      },
+      {
+        title: "Harvard Business Review: How Resilience Works",
+        url: "https://hbr.org/2002/05/how-resilience-works",
+      },
+      {
+        title: "James Clear: Forget About Goals, Focus on Systems Instead",
+        url: "https://jamesclear.com/goals-systems",
+      },
+      {
+        title: "The Muse: Why Impostor Syndrome Means You're Doing Something Right",
+        url: "https://www.themuse.com/advice/why-impostor-syndrome-means-youre-actually-more-qualified-than-you-think",
+      },
+      {
+        title: "LinkedIn: Always Be in Beta - Career Growth Mindset",
+        url: "https://www.linkedin.com/pulse/always-beta-career-growth-mindset-david-peterson/",
+      },
+      {
+        title: "BetterUp: The Power of Big Picture Thinking",
+        url: "https://www.betterup.com/blog/big-picture-thinking",
+      },
+      {
+        title: "Austin Belcak: How to Control the Narrative in Your Job Search",
+        url: "https://cultivatedculture.com/own-your-career-narrative/",
+      },
+      {
+        title: "Harvard Business Review: Manage Your Energy, Not Your Time",
+        url: "https://hbr.org/2007/10/manage-your-energy-not-your-time",
+      },
+      {
+        title: "McKinsey: The Future of Work Requires a Resilient Mindset",
+        url: "https://www.mckinsey.com/capabilities/people-and-organizational-performance/our-insights/organizational-resilience-in-a-world-of-uncertainty",
+      },
+    ]
+
+    // Return the link for this card (array is 0-indexed, but card IDs start at 1)
+    return links[cardNumber - 1]
+  }
+
+  // Get the go deeper link for this card
+  const goDeeperLink = getGoDeeper()
+
   return (
     <motion.div
       className="relative w-full h-[500px] perspective"
@@ -111,21 +170,39 @@ export default function CardComponent({ card, categoryColor, isFlipped, onFlip }
             filter: isHovered && isFlipped ? "brightness(1.05)" : "brightness(1)",
           }}
         >
-          <h3 className="text-xl font-medium mb-6" style={{ color: categoryColor }}>
+          <h3 className="text-base font-medium mb-6" style={{ color: categoryColor }}>
             {card.title}
           </h3>
 
-          <ul className="space-y-6 mb-auto">
+          <ul className="space-y-2.5 mb-auto">
             {card.bulletPoints.map((point, index) => (
               <li key={index} className="flex items-start" style={{ color: categoryColor }}>
                 <span
                   className="mr-3 mt-1.5 h-2.5 w-2.5 rounded-full flex-shrink-0"
                   style={{ backgroundColor: categoryColor }}
                 ></span>
-                <span className="text-lg leading-tight">{point}</span>
+                <span className="text-[20px] leading-tight">{point}</span>
               </li>
             ))}
           </ul>
+
+          {/* Go Deeper section - now works for all mindset cards 1-10 */}
+          {goDeeperLink && (
+            <div className="mt-6">
+              <h4 className="text-base font-medium mb-1" style={{ color: categoryColor }}>
+                Go Deeper
+              </h4>
+              <a
+                href={goDeeperLink.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm underline hover:opacity-80 transition-opacity"
+                style={{ color: categoryColor }}
+              >
+                {goDeeperLink.title} →
+              </a>
+            </div>
+          )}
 
           {card.quote && (
             <div className="mt-6">
@@ -133,13 +210,8 @@ export default function CardComponent({ card, categoryColor, isFlipped, onFlip }
                 Words of Wisdom
               </h4>
               <p className="text-sm italic" style={{ color: categoryColor }}>
-                "{card.quote}"
+                "{card.quote}" {card.quoteAuthor && `— ${card.quoteAuthor}`}
               </p>
-              {card.quoteAuthor && (
-                <p className="text-sm mt-1" style={{ color: categoryColor }}>
-                  — {card.quoteAuthor}
-                </p>
-              )}
             </div>
           )}
         </div>
