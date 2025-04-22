@@ -63,28 +63,28 @@ export default function CardComponent({ card, categoryColor, isFlipped, onFlip }
         url: "https://jamesclear.com/goals-systems",
       },
       {
-        title: "The Muse: Why Impostor Syndrome Means You're Doing Something Right",
-        url: "https://www.themuse.com/advice/why-impostor-syndrome-means-youre-actually-more-qualified-than-you-think",
+        title: "The Muse: How to Banish Imposter Syndrome and Embrace Everything You Deserve",
+        url: "https://www.themuse.com/advice/how-to-banish-imposter-syndrome-and-embrace-everything-you-deserve",
       },
       {
-        title: "LinkedIn: Always Be in Beta - Career Growth Mindset",
-        url: "https://www.linkedin.com/pulse/always-beta-career-growth-mindset-david-peterson/",
+        title: "Developing a Growth Mindset with Carol Dweck",
+        url: "https://youtu.be/hiiEeMN7vbQ?si=GU2Ae0f_fRyWwQE5",
       },
       {
         title: "BetterUp: The Power of Big Picture Thinking",
         url: "https://www.betterup.com/blog/big-picture-thinking",
       },
       {
-        title: "Austin Belcak: How to Control the Narrative in Your Job Search",
-        url: "https://cultivatedculture.com/own-your-career-narrative/",
+        title: "UX Planet: How My Layoff Led to My Career Growth",
+        url: "https://uxplanet.org/how-my-layoff-led-to-my-career-growth-my-journey-of-building-resilience-cba62fd2789b",
       },
       {
         title: "Harvard Business Review: Manage Your Energy, Not Your Time",
         url: "https://hbr.org/2007/10/manage-your-energy-not-your-time",
       },
       {
-        title: "McKinsey: The Future of Work Requires a Resilient Mindset",
-        url: "https://www.mckinsey.com/capabilities/people-and-organizational-performance/our-insights/organizational-resilience-in-a-world-of-uncertainty",
+        title: "LinkedIn: How can you build resilience when job searching?",
+        url: "https://www.linkedin.com/advice/0/how-can-you-build-resilience-when-job-searching-aedwf",
       },
     ]
 
