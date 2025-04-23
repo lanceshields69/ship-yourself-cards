@@ -36,60 +36,148 @@ export default function CardComponent({ card, categoryColor, isFlipped, onFlip }
     return getCategoryIcon(categoryId, categoryColor, 56)
   }
 
-  // Get the "Go Deeper" link for mindset cards
+  // Get the "Go Deeper" link for mindset, super-ic, and networking cards
   const getGoDeeper = () => {
-    // Only show for mindset cards 1-10
-    if (!card.id.startsWith("mindset-")) return null
+    // For mindset cards 1-10
+    if (card.id.startsWith("mindset-")) {
+      const cardNumber = Number.parseInt(card.id.split("-")[1])
+      if (cardNumber < 1 || cardNumber > 10) return null
 
-    const cardNumber = Number.parseInt(card.id.split("-")[1])
-    if (cardNumber < 1 || cardNumber > 10) return null
+      // Define the links for each mindset card
+      const links = [
+        {
+          title: "James Clear: Motivation: The Scientific Guide on How to Get and Stay Motivated",
+          url: "https://jamesclear.com/motivation",
+        },
+        {
+          title: "Ryan Holiday: The Obstacle Is The Way",
+          url: "https://dailystoic.com/obstacle-is-the-way-summary/",
+        },
+        {
+          title: "Harvard Business Review: How Resilience Works",
+          url: "https://hbr.org/2002/05/how-resilience-works",
+        },
+        {
+          title: "James Clear: Forget About Goals, Focus on Systems Instead",
+          url: "https://jamesclear.com/goals-systems",
+        },
+        {
+          title: "The Muse: How to Banish Imposter Syndrome and Embrace Everything You Deserve",
+          url: "https://www.themuse.com/advice/how-to-banish-imposter-syndrome-and-embrace-everything-you-deserve",
+        },
+        {
+          title: "Developing a Growth Mindset with Carol Dweck",
+          url: "https://youtu.be/hiiEeMN7vbQ?si=GU2Ae0f_fRyWwQE5",
+        },
+        {
+          title: "BetterUp: The Power of Big Picture Thinking",
+          url: "https://www.betterup.com/blog/big-picture-thinking",
+        },
+        {
+          title: "UX Planet: How My Layoff Led to My Career Growth",
+          url: "https://uxplanet.org/how-my-layoff-led-to-my-career-growth-my-journey-of-building-resilience-cba62fd2789b",
+        },
+        {
+          title: "Harvard Business Review: Manage Your Energy, Not Your Time",
+          url: "https://hbr.org/2007/10/manage-your-energy-not-your-time",
+        },
+        {
+          title: "LinkedIn: How can you build resilience when job searching?",
+          url: "https://www.linkedin.com/advice/0/how-can-you-build-resilience-when-job-searching-aedwf",
+        },
+      ]
 
-    // Define the links for each mindset card
-    const links = [
-      {
-        title: "James Clear: Motivation: The Scientific Guide on How to Get and Stay Motivated",
-        url: "https://jamesclear.com/motivation",
-      },
-      {
-        title: "Ryan Holiday: The Obstacle Is The Way",
-        url: "https://dailystoic.com/obstacle-is-the-way-summary/",
-      },
-      {
-        title: "Harvard Business Review: How Resilience Works",
-        url: "https://hbr.org/2002/05/how-resilience-works",
-      },
-      {
-        title: "James Clear: Forget About Goals, Focus on Systems Instead",
-        url: "https://jamesclear.com/goals-systems",
-      },
-      {
-        title: "The Muse: How to Banish Imposter Syndrome and Embrace Everything You Deserve",
-        url: "https://www.themuse.com/advice/how-to-banish-imposter-syndrome-and-embrace-everything-you-deserve",
-      },
-      {
-        title: "Developing a Growth Mindset with Carol Dweck",
-        url: "https://youtu.be/hiiEeMN7vbQ?si=GU2Ae0f_fRyWwQE5",
-      },
-      {
-        title: "BetterUp: The Power of Big Picture Thinking",
-        url: "https://www.betterup.com/blog/big-picture-thinking",
-      },
-      {
-        title: "UX Planet: How My Layoff Led to My Career Growth",
-        url: "https://uxplanet.org/how-my-layoff-led-to-my-career-growth-my-journey-of-building-resilience-cba62fd2789b",
-      },
-      {
-        title: "Harvard Business Review: Manage Your Energy, Not Your Time",
-        url: "https://hbr.org/2007/10/manage-your-energy-not-your-time",
-      },
-      {
-        title: "LinkedIn: How can you build resilience when job searching?",
-        url: "https://www.linkedin.com/advice/0/how-can-you-build-resilience-when-job-searching-aedwf",
-      },
-    ]
+      // Return the link for this card (array is 0-indexed, but card IDs start at 1)
+      return links[cardNumber - 1]
+    }
 
-    // Return the link for this card (array is 0-indexed, but card IDs start at 1)
-    return links[cardNumber - 1]
+    // For super-ic cards 1-5
+    if (card.id.startsWith("super-ic-")) {
+      const cardNumber = Number.parseInt(card.id.split("-")[2])
+      if (cardNumber < 1 || cardNumber > 5) return null
+
+      // Define the links for each super-ic card
+      const links = [
+        {
+          title: 'Michael ("Ridd") Riddering: Building a portfolio page using v0',
+          url: "https://www.dive.club/ideas/building-a-portfolio-page-using-v0",
+        },
+        {
+          title: "Thiago Costa: Cultivating taste as a designer",
+          url: "https://www.dive.club/deep-dives/thiago-costa",
+        },
+        {
+          title: "Ethan Mollick: Speaking things into existence",
+          url: "https://www.oneusefulthing.org/p/speaking-things-into-existence",
+        },
+        {
+          title: "Nad Chishtie: Loveable - A new way to design and build with AI",
+          url: "https://www.dive.club/deep-dives/nad-chishtie",
+        },
+        {
+          title: "Ethan Mollick: 15 Times to use AI, and 5 Not to",
+          url: "https://www.oneusefulthing.org/p/15-times-to-use-ai-and-5-not-to",
+        },
+      ]
+
+      // Return the link for this card (array is 0-indexed, but card IDs start at 1)
+      return links[cardNumber - 1]
+    }
+
+    // For networking cards 1-10
+    if (card.id.startsWith("networking-")) {
+      const cardNumber = Number.parseInt(card.id.split("-")[1])
+      if (cardNumber < 1 || cardNumber > 10) return null
+
+      // Define the links for each networking card
+      const links = [
+        {
+          title: "Harvard Business Review: A Beginner's Guide to Networking",
+          url: "https://hbr.org/2023/03/a-beginners-guide-to-networking",
+        },
+        {
+          title: "Ladders: The 18 questions to ask in an informational interview",
+          url: "https://www.theladders.com/career-advice/questions-to-ask-in-an-informational-interview",
+        },
+        {
+          title: "Help Guide: Job Networking Tips",
+          url: "https://www.helpguide.org/wellness/career/job-networking-tips",
+        },
+        {
+          title: "Donna Serdula: The Absolute Best Way to Use LinkedIn",
+          url: "https://www.letseatgrandma.com/career-warrior-podcast-355/",
+        },
+        {
+          title: "Indeed: How To Network for a Job (Why It's Important and 7 Tips)",
+          url: "https://www.indeed.com/career-advice/finding-a-job/how-to-network-for-a-job",
+        },
+        {
+          title: "Angie Callen: How to Network Authentically in Your Job Search",
+          url: "https://www.macslist.org/podcasts/networking/how-to-network-authentically-in-your-job-search-with-angie-callen",
+        },
+        {
+          title: "Shortlister: 10 Networking Tips for 2025",
+          url: "https://www.myshortlister.com/insights/networking-tips",
+        },
+        {
+          title: "Jobscan: How to Find a Job in 2025: Tips and Tricks from the Experts",
+          url: "https://www.jobscan.co/blog/how-to-find-a-job/",
+        },
+        {
+          title: "Work It Daily: Identify Your Unique Value Add (UVA)",
+          url: "https://youtu.be/3yuhTtQhbBs?si=6uaiI7oRJ4CqDRv1",
+        },
+        {
+          title: "Tavoq: How To Get A New, Better-Paying Job In 2025",
+          url: "https://tavoq.com/blog/fast-finding-new-job-strategies",
+        },
+      ]
+
+      // Return the link for this card (array is 0-indexed, but card IDs start at 1)
+      return links[cardNumber - 1]
+    }
+
+    return null
   }
 
   // Get the go deeper link for this card
@@ -186,7 +274,7 @@ export default function CardComponent({ card, categoryColor, isFlipped, onFlip }
             ))}
           </ul>
 
-          {/* Go Deeper section - now works for all mindset cards 1-10 */}
+          {/* Go Deeper section - now works for mindset, super-ic, and networking cards */}
           {goDeeperLink && (
             <div className="mt-6">
               <h4 className="text-base font-medium mb-1" style={{ color: categoryColor }}>

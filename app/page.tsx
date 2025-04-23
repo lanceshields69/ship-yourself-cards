@@ -63,7 +63,16 @@ export default function Home() {
         </div>
         <div className="mt-14 md:mt-18 text-sm text-left">
           <p>Created by Lance Shields</p>
-          <p>lanceshields.design</p>
+          <p>
+            <a
+              href="https://www.lanceshields.design"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline"
+            >
+              lanceshields.design
+            </a>
+          </p>
         </div>
       </div>
     </main>

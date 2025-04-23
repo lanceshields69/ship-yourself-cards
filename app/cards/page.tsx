@@ -96,7 +96,13 @@ export default function CardsPage() {
         <div className="flex-grow flex items-center justify-center">
           {isShuffling ? (
             <div className="animate-pulse opacity-50 w-full">
-              <CardDeck category={selectedCategory} isShuffleMode={false} shuffledCards={[]} />
+              <CardDeck
+                category={selectedCategory}
+                isShuffleMode={false}
+                shuffledCards={[]}
+                categories={categories}
+                onSelectCategory={handleSelectCategory}
+              />
             </div>
           ) : (
             <motion.div
@@ -111,6 +117,8 @@ export default function CardsPage() {
                 isShuffleMode={isShuffleMode}
                 shuffledCards={shuffledCards}
                 initialCardId={initialCardId}
+                categories={categories}
+                onSelectCategory={handleSelectCategory}
               />
             </motion.div>
           )}

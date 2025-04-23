@@ -4,16 +4,24 @@ import CardComponent from "@/components/card-component"
 import type { Category, Card } from "@/lib/types"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { motion, AnimatePresence, type PanInfo } from "framer-motion"
-// import ShareButton from "@/components/share-button"
 
 interface CardDeckProps {
   category: Category
   isShuffleMode: boolean
   shuffledCards: Card[]
   initialCardId?: string | null
+  categories: Category[]
+  onSelectCategory: (category: Category) => void
 }
 
-export default function CardDeck({ category, isShuffleMode, shuffledCards, initialCardId = null }: CardDeckProps) {
+export default function CardDeck({
+  category,
+  isShuffleMode,
+  shuffledCards,
+  initialCardId = null,
+  categories,
+  onSelectCategory,
+}: CardDeckProps) {
   const isMobile = useMediaQuery("(max-width: 768px)")
   const [currentIndex, setCurrentIndex] = useState(0)
   const [visibleCards, setVisibleCards] = useState<Card[]>([])
@@ -99,6 +107,26 @@ export default function CardDeck({ category, isShuffleMode, shuffledCards, initi
   const canGoNext = currentIndex < cardsToDisplay.length - (isMobile ? 1 : 3)
   const canGoPrev = currentIndex > 0
 
+  // Check if we're at the last card of the category
+  const isLastCard = currentIndex === cardsToDisplay.length - 1
+
+  // Function to navigate to the next category
+  const goToNextCategory = () => {
+    if (isShuffleMode) return // Don't navigate categories in shuffle mode
+
+    // Find the current category index
+    const currentCategoryIndex = categories.findIndex((cat) => cat.id === category.id)
+
+    // If there's a next category, navigate to it
+    if (currentCategoryIndex < categories.length - 1) {
+      const nextCategory = categories[currentCategoryIndex + 1]
+      onSelectCategory(nextCategory)
+    } else {
+      // If we're at the last category, loop back to the first one
+      onSelectCategory(categories[0])
+    }
+  }
+
   // Arrow colors - normal and hover (25% lighter)
   const arrowColor = "#454545"
   const arrowHoverColor = "#6A6A6A" // 25% lighter than #454545
@@ -124,128 +152,120 @@ export default function CardDeck({ category, isShuffleMode, shuffledCards, initi
     </svg>
   )
 
-  // Get share title based on current mode and category
-  // const getShareTitle = () => {
-  //   if (isShuffleMode) {
-  //     return "Check out my shuffled Ship Yourself Cards"
-  //   } else {
-  //     return `Check out the ${category.name} cards from Ship Yourself`
-  //   }
-  // }
-
   return (
     <div className="w-full relative">
-      <div className="flex justify-center items-center">
-        {/* Card display area */}
-        <div className={`relative ${isMobile ? "w-[345px] h-[500px]" : "w-full flex justify-center"}`}>
-          {isMobile ? (
-            // Mobile: Stacked card view with animation and swipe functionality
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`${currentIndex}-${category.id}-${isShuffleMode ? "shuffle" : "normal"}`}
-                className="relative w-full h-full"
-                initial={{
-                  opacity: 0,
-                  x: animationDirection === "left" ? 50 : animationDirection === "right" ? -50 : 30,
-                }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: animationDirection === "left" ? -50 : animationDirection === "right" ? 50 : 0 }}
-                transition={{ duration: 0.3 }}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.7}
-                onDragEnd={(e, info: PanInfo) => {
-                  if (!isAnimating) {
-                    if (info.offset.x < -80 && canGoNext) {
-                      nextCard()
-                    } else if (info.offset.x > 80 && canGoPrev) {
-                      prevCard()
-                    }
-                  }
-                }}
-              >
-                {/* Stacked background cards for visual effect */}
-                {visibleCards.length > 0 && (
-                  <>
-                    <div
-                      className="absolute top-2 left-2 w-full h-full rounded-3xl shadow-sm"
-                      style={{ backgroundColor: visibleCards[0].backgroundColor }}
-                    ></div>
-                    <div
-                      className="absolute top-1 left-1 w-full h-full rounded-3xl shadow-sm"
-                      style={{ backgroundColor: visibleCards[0].backgroundColor }}
-                    ></div>
-                  </>
-                )}
-
-                {/* Current card */}
-                {visibleCards.length > 0 && (
-                  <CardComponent
-                    card={visibleCards[0]}
-                    categoryColor={
-                      isShuffleMode && "categoryColor" in visibleCards[0]
-                        ? (visibleCards[0] as any).categoryColor
-                        : category.color
-                    }
-                    isFlipped={flippedCardIndex === 0}
-                    onFlip={() => handleCardFlip(0)}
-                  />
-                )}
-              </motion.div>
-            </AnimatePresence>
-          ) : (
-            // Desktop: Carousel-style animation with smooth sliding
+      {/* Card display area */}
+      <div
+        className={`relative ${isMobile ? "w-[345px] h-[500px]" : "w-full flex justify-center"}`}
+        style={{ position: "relative" }}
+      >
+        {isMobile ? (
+          // Mobile: Stacked card view with animation and swipe functionality
+          <AnimatePresence mode="wait">
             <motion.div
-              key={`${category.id}-${isShuffleMode ? "shuffle" : "normal"}`}
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="overflow-visible pt-[30px]"
-              style={{
-                width: "1200px",
-                marginBottom: "20px",
-                marginLeft: "-12px",
-                paddingBottom: "10px",
+              key={`${currentIndex}-${category.id}-${isShuffleMode ? "shuffle" : "normal"}`}
+              className="relative w-full h-full"
+              initial={{
+                opacity: 0,
+                x: animationDirection === "left" ? 50 : animationDirection === "right" ? -50 : 30,
               }}
-              ref={carouselRef}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: animationDirection === "left" ? -50 : animationDirection === "right" ? 50 : 0 }}
+              transition={{ duration: 0.3 }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.7}
+              onDragEnd={(e, info: PanInfo) => {
+                if (!isAnimating) {
+                  if (info.offset.x < -80 && canGoNext) {
+                    nextCard()
+                  } else if (info.offset.x > 80 && canGoPrev) {
+                    prevCard()
+                  }
+                }
+              }}
             >
-              <motion.div
-                className="flex"
-                initial={false}
-                animate={{
-                  x: -1 * (currentIndex * CARD_TOTAL_WIDTH),
-                }}
-                transition={{
-                  duration: 0.5,
-                  ease: "easeInOut",
-                }}
-              >
-                {cardsToDisplay.map((card, idx) => (
+              {/* Stacked background cards for visual effect */}
+              {visibleCards.length > 0 && (
+                <>
                   <div
-                    key={card.id + (isShuffleMode ? "-shuffled-" + idx : "")}
-                    className="flex-shrink-0"
-                    style={{
-                      width: CARD_WIDTH,
-                      marginRight: CARD_GAP,
-                    }}
-                  >
-                    <CardComponent
-                      card={card}
-                      categoryColor={
-                        isShuffleMode && "categoryColor" in card ? (card as any).categoryColor : category.color
-                      }
-                      isFlipped={flippedCardIndex === idx}
-                      onFlip={() => handleCardFlip(idx)}
-                    />
-                  </div>
-                ))}
-              </motion.div>
+                    className="absolute top-2 left-2 w-full h-full rounded-3xl shadow-sm"
+                    style={{ backgroundColor: visibleCards[0].backgroundColor }}
+                  ></div>
+                  <div
+                    className="absolute top-1 left-1 w-full h-full rounded-3xl shadow-sm"
+                    style={{ backgroundColor: visibleCards[0].backgroundColor }}
+                  ></div>
+                </>
+              )}
+
+              {/* Current card */}
+              {visibleCards.length > 0 && (
+                <CardComponent
+                  card={visibleCards[0]}
+                  categoryColor={
+                    isShuffleMode && "categoryColor" in visibleCards[0]
+                      ? (visibleCards[0] as any).categoryColor
+                      : category.color
+                  }
+                  isFlipped={flippedCardIndex === 0}
+                  onFlip={() => handleCardFlip(0)}
+                />
+              )}
             </motion.div>
-          )}
-        </div>
+          </AnimatePresence>
+        ) : (
+          // Desktop: Carousel-style animation with smooth sliding
+          <motion.div
+            key={`${category.id}-${isShuffleMode ? "shuffle" : "normal"}`}
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="overflow-visible pt-[30px]"
+            style={{
+              width: "1200px",
+              marginBottom: "20px",
+              marginLeft: "-12px",
+              paddingBottom: "10px",
+            }}
+            ref={carouselRef}
+          >
+            <motion.div
+              className="flex"
+              initial={false}
+              animate={{
+                x: -1 * (currentIndex * CARD_TOTAL_WIDTH),
+              }}
+              transition={{
+                duration: 0.5,
+                ease: "easeInOut",
+              }}
+            >
+              {cardsToDisplay.map((card, idx) => (
+                <div
+                  key={card.id + (isShuffleMode ? "-shuffled-" + idx : "")}
+                  className="flex-shrink-0"
+                  style={{
+                    width: CARD_WIDTH,
+                    marginRight: CARD_GAP,
+                  }}
+                >
+                  <CardComponent
+                    card={card}
+                    categoryColor={
+                      isShuffleMode && "categoryColor" in card ? (card as any).categoryColor : category.color
+                    }
+                    isFlipped={flippedCardIndex === idx}
+                    onFlip={() => handleCardFlip(idx)}
+                  />
+                </div>
+              ))}
+            </motion.div>
+          </motion.div>
+        )}
       </div>
 
-      {/* Navigation arrows below the card */}
+      {/* Navigation arrows */}
       <div className="flex justify-center mt-6 gap-8 items-center">
         <div
           className={`cursor-pointer ${!canGoPrev ? "opacity-30 cursor-not-allowed" : ""}`}
