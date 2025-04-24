@@ -62,17 +62,18 @@ export default function Home() {
           </div>
         </div>
         <div className="mt-14 md:mt-18 text-sm text-left">
-          <p>Created by Lance Shields</p>
           <p>
+            Created by{" "}
             <a
               href="https://www.lanceshields.design"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:underline"
+              className="underline hover:underline"
             >
-              lanceshields.design
+              Lance Shields
             </a>
           </p>
+          <p>© 2025, Ship Yourself Cards</p>
         </div>
       </div>
     </main>

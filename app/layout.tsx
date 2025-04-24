@@ -7,9 +7,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Ship Yourself Cards - Field Notes for Designers Redesigning Their Careers",
-  description:
-    "Explore practical, tactical cards to build momentum, tell your story, and launch your next career move.",
+  title: "Ship Yourself Cards",
+  description: "Field Notes for Designers Redesigning Their Careers",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -24,9 +23,8 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "Ship Yourself Cards - Field Notes for Designers Redesigning Their Careers",
-    description:
-      "Explore practical, tactical cards to build momentum, tell your story, and launch your next career move.",
+    title: "Ship Yourself Cards",
+    description: "Field Notes for Designers Redesigning Their Careers",
     url: "https://shipyourselfcards.com",
     siteName: "Ship Yourself Cards",
     images: [
@@ -42,9 +40,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ship Yourself Cards - Field Notes for Designers Redesigning Their Careers",
-    description:
-      "Explore practical, tactical cards to build momentum, tell your story, and launch your next career move.",
+    title: "Ship Yourself Cards",
+    description: "Field Notes for Designers Redesigning Their Careers",
     images: [
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Social-image.jpg-KnsA6tp72rd8T5Sv6GxdBWAEihTU6Y.jpeg",
     ], // Same as OpenGraph image
