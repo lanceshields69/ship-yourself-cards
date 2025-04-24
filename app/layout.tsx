@@ -11,8 +11,17 @@ export const metadata: Metadata = {
   description:
     "Explore practical, tactical cards to build momentum, tell your story, and launch your next career move.",
   icons: {
-    icon: "/favicon-shipyourself.png",
-    apple: "/favicon-shipyourself.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-16x16.png", sizes: "16x16" },
+      { url: "/favicon-32x32.png", sizes: "32x32" },
+    ],
+    apple: { url: "/apple-touch-icon.png" },
+    shortcut: { url: "/favicon.ico" },
+    other: [
+      { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
   },
   openGraph: {
     title: "Ship Yourself Cards - Field Notes for Designers Redesigning Their Careers",
