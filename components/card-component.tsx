@@ -1,10 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import type { Card as CardType } from "@/lib/types"
 import { getCategoryIcon } from "@/components/icons"
-// Update the import for CardShareButton
 import CardShareButton from "@/components/card-share-button-fixed"
 
 interface CardComponentProps {
@@ -16,6 +15,12 @@ interface CardComponentProps {
 
 export default function CardComponent({ card, categoryColor, isFlipped, onFlip }: CardComponentProps) {
   const [isHovered, setIsHovered] = useState(false)
+  const [prevFlipped, setPrevFlipped] = useState<boolean | null>(null)
+
+  // Update previous flipped state
+  useEffect(() => {
+    setPrevFlipped(isFlipped)
+  }, [isFlipped])
 
   // Extract the category ID from the card's category name
   const getCategoryId = () => {
@@ -170,6 +175,182 @@ export default function CardComponent({ card, categoryColor, isFlipped, onFlip }
         {
           title: "Tavoq: How To Get A New, Better-Paying Job In 2025",
           url: "https://tavoq.com/blog/fast-finding-new-job-strategies",
+        },
+      ]
+
+      // Return the link for this card (array is 0-indexed, but card IDs start at 1)
+      return links[cardNumber - 1]
+    }
+
+    // For interviewing cards 1-10
+    if (card.id.startsWith("interviewing-")) {
+      const cardNumber = Number.parseInt(card.id.split("-")[1])
+      if (cardNumber < 1 || cardNumber > 10) return null
+
+      // Define the links for each interviewing card
+      const links = [
+        {
+          title: "Adobe Design: How to ace a design leader job interview",
+          url: "https://adobe.design/stories/leading-design/how-to-ace-a-design-leader-job-interview",
+        },
+        {
+          title: "Marlo Lyons: Use the STAR Interview Method to Land Your Next Job",
+          url: "https://hbr.org/2025/02/use-the-star-interview-method-to-land-your-next-job",
+        },
+        {
+          title: "4 resume tweaks that helped a teacher with no tech background land a job at Google",
+          url: "https://www.msn.com/en-ie/money/careersandeducation/4-r%C3%A9sum%C3%A9-tweaks-that-helped-a-teacher-with-no-tech-background-land-a-job-at-google/ar-AA1D5Lrr",
+        },
+        {
+          title: "Cass Thompson: How To Cheat in a Virtual Job Interview",
+          url: "https://youtu.be/e0nAtHrMkvE?si=y4t4jUvvFdlJWf4R",
+        },
+        {
+          title: "How to Present a UX Portfolio During a Job Interview",
+          url: "https://designlab.com/blog/ux-portfolio-presentation",
+        },
+        {
+          title: "Career Coach: How To Improve Your Interview Skills",
+          url: "https://www.biospace.com/career-advice/career-coach-how-to-improve-your-interview-skills",
+        },
+        {
+          title: "Aaron James: The complete guide to design interviews",
+          url: "https://medium.com/design-bootcamp/the-complete-guide-to-mastering-design-interview-loops-2dc2e5fedc5b",
+        },
+        {
+          title: "Aquent: Top 10 must-ask design interview questions",
+          url: "https://aquenttalent.com/blog/top-10-must-ask-design-interview-questions",
+        },
+        {
+          title: "Gregory Heller: A Strategic Game Plan for Job Interviews",
+          url: "https://www.linkedin.com/pulse/strategic-game-plan-job-interviews-gregory-heller-igc3c/",
+        },
+        {
+          title: "Kate Sargent: Interview Coaching and Tips",
+          url: "https://podcasts.apple.com/us/podcast/interview-coaching-and-tips-with-kate-sargent/id1477653356?i=1000693353359",
+        },
+      ]
+
+      // Return the link for this card (array is 0-indexed, but card IDs start at 1)
+      return links[cardNumber - 1]
+    }
+
+    // For storytelling cards 1-10
+    if (card.id.startsWith("storytelling-")) {
+      const cardNumber = Number.parseInt(card.id.split("-")[1])
+      if (cardNumber < 1 || cardNumber > 10) return null
+
+      // Define the links for each storytelling card
+      const links = [
+        {
+          title: "Chris Do: The Future of Personal Branding?",
+          url: "https://www.brandisea.com/podcasts/the-future-of-personal-branding-inside-the-mind-of-chris-do/",
+        },
+        {
+          title: "Podcast: Why the Most Powerful Personal Brands Are Built on Service, Not Self",
+          url: "https://podcasts.apple.com/us/podcast/why-the-most-powerful-personal-brands-are-built-on/id1479643724?i=1000702163013",
+        },
+        {
+          title: "TED Series: 5 Steps to Building a Personal Brand You Feel Good About",
+          url: "https://youtu.be/ozMCb0wOnMU?si=grI6uzbvZaguqkAH",
+        },
+        {
+          title: "Behind the Scenes of Kelly Wearstler's Content Empire",
+          url: "https://www.architecturaldigest.com/story/behind-the-scenes-of-kelly-wearstler-content-empire",
+        },
+        {
+          title: "Final Round AI: Comprehensive Interview Coaching and Preparation Guide",
+          url: "https://www.finalroundai.com/blog/comprehensive-interview-coaching-and-preparation-guide",
+        },
+        {
+          title: "Designlab: Storytelling and Personal Branding in UX",
+          url: "https://youtu.be/mZaYxqaWzTk?si=rMa1B3zPqCAFQIUU",
+        },
+        {
+          title: "HBR: A New Approach to Building Your Personal Brand",
+          url: "https://hbr.org/2023/05/a-new-approach-to-building-your-personal-brand",
+        },
+        {
+          title: "Creating a Personal Brand with Jacob Cass",
+          url: "https://logogeek.uk/podcast/creating-a-personal-brand",
+        },
+        {
+          title: "Alex Cattoni: 4 Types of Stories To Build Your Personal Brand",
+          url: "https://youtu.be/8vCQTf8BVzA?si=p_Lhky4U4wHd7m7b",
+        },
+        {
+          title: "Designlab: Just Show Up: The Importance of Networking Marketing and the Art of Facing Fear",
+          url: "https://youtu.be/Il8dbXlLvio?si=Q_-ChsZaw41-gK0N",
+        },
+      ]
+
+      // Return the link for this card (array is 0-indexed, but card IDs start at 1)
+      return links[cardNumber - 1]
+    }
+
+    // Add the negotiation links section to the getGoDeeper function, right after the storytelling section
+
+    // For negotiation cards 1-5
+    if (card.id.startsWith("negotiation-")) {
+      const cardNumber = Number.parseInt(card.id.split("-")[1])
+      if (cardNumber < 1 || cardNumber > 5) return null
+
+      // Define the links for each negotiation card
+      const links = [
+        {
+          title: "Yale: Job Offers & Salary Negotiation",
+          url: "https://ocs.yale.edu/job-offers-salary-negotiation/",
+        },
+        {
+          title: "Work It Daily: 3 Salary Negotiation Tips For 2025",
+          url: "https://www.youtube.com/live/alS5UMfwvF8?si=852BvLQbl-SFZzGU",
+        },
+        {
+          title: "How to negotiate salary: a hands-on guide for your design career",
+          url: "https://blog.readymag.com/how-to-negotiate-salary-guide-for-designers/",
+        },
+        {
+          title: "Melody Koh: Negotiating Salary and Benefits as a Designer – An Unorthodox Guide",
+          url: "https://blog.prototypr.io/negotiating-salary-and-benefits-as-a-designer-an-unorthodox-guide-74fd4f27312d",
+        },
+        {
+          title: "Dribbble: New Design Job? Negotiate Your Salary Like A Pro",
+          url: "https://dribbble.com/resources/career/negotiate-your-design-salary",
+        },
+      ]
+
+      // Return the link for this card (array is 0-indexed, but card IDs start at 1)
+      return links[cardNumber - 1]
+    }
+
+    // Add the wildcards links section to the getGoDeeper function, right after the negotiation section
+
+    // For wildcards (Power-Ups) cards 1-5
+    if (card.id.startsWith("wildcards-")) {
+      const cardNumber = Number.parseInt(card.id.split("-")[1])
+      if (cardNumber < 1 || cardNumber > 5) return null
+
+      // Define the links for each wildcards card
+      const links = [
+        {
+          title: "Forbes: 6 Simple Ways To Harness Serendipity In Your Career",
+          url: "https://www.forbes.com/sites/toddnordstrom/2021/03/18/6-simple-ways-to-harness-serendipity-in-your-career/",
+        },
+        {
+          title: "10 Ways to Supercharge Your Job Search for the Week Ahead",
+          url: "https://www.linkedin.com/pulse/monday-momentum-10-ways-supercharge-your-job-search-garrison-56qhe/",
+        },
+        {
+          title: "How to fight off feeling like a fraud during your job search",
+          url: "https://www.linkedin.com/pulse/how-fight-off-feeling-like-fraud-during-your-job-search-andrew-seaman/",
+        },
+        {
+          title: "Chase Jarvis: Create Before You Consume",
+          url: "https://chasejarvis.com/blog/create-before-you-consume/",
+        },
+        {
+          title: "Muse: 10 Small Wins to Celebrate During Your Job Search",
+          url: "https://www.themuse.com/advice/celebrate-the-wins",
         },
       ]
 
