@@ -3,6 +3,9 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { Analytics } from "@vercel/analytics/react"
+import { Suspense } from "react"
+import { GoogleAnalytics } from "@next/third-parties/google"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -58,8 +61,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light">
-          {children}
+          <Suspense>{children}</Suspense>
         </ThemeProvider>
+        <Analytics />
+        <GoogleAnalytics gaId="G-H8JW9EH3HY" />
       </body>
     </html>
   )
