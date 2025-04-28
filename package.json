@@ -65,7 +65,8 @@
     "vue": "latest",
     "vue-router": "latest",
     "framer-motion": "latest",
-    "@vercel/analytics": "latest"
+    "@vercel/analytics": "latest",
+    "@next/third-parties": "latest"
   },
   "devDependencies": {
     "@types/node": "^22",
