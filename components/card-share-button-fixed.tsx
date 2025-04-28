@@ -184,9 +184,9 @@ export default function CardShareButton({ cardId, categoryId, categoryColor, car
           e.stopPropagation()
           setIsOpen(!isOpen)
         }}
-        className="absolute bottom-3 right-3 p-2 rounded-full hover:bg-black/5 transition-colors flex items-center gap-1"
-        aria-label="Share this card"
+        className="flex items-center gap-1 hover:opacity-80 transition-opacity"
         style={{ color: categoryColor }}
+        aria-label="Share this card"
       >
         <span className="text-sm font-normal">Share</span>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

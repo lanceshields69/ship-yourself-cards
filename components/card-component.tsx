@@ -444,44 +444,6 @@ export default function CardComponent({ card, categoryColor, isFlipped, onFlip }
               </svg>
               <span className="text-sm font-normal">Click to flip</span>
             </div>
-            <button
-              className="flex items-center gap-1 p-2 rounded-full hover:bg-black/5 transition-colors"
-              style={{ color: categoryColor }}
-              onClick={(e) => {
-                e.stopPropagation()
-                // We're just using this as a placeholder for the share button
-                // The actual share functionality is handled by the CardShareButton component
-              }}
-            >
-              <span className="text-sm font-normal">Share</span>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M14.5 12L19 7.5L14.5 3"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M15.9999 18H1.75C1.55109 18 1.36032 17.921 1.21967 17.7803C1.07902 17.6397 1 17.4489 1 17.25V6"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M5.03345 14.25C5.53295 12.318 6.66009 10.6067 8.2378 9.38497C9.81552 8.1632 11.7544 7.50015 13.7499 7.5H18.9998"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-          </div>
-
-          {/* Keep the CardShareButton for functionality, but hide it visually */}
-          <div className="hidden">
             <CardShareButton
               cardId={card.id}
               categoryId={getCategoryId()}
