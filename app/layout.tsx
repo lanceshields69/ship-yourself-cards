@@ -5,6 +5,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Analytics } from "@vercel/analytics/react"
 import { Suspense } from "react"
+import { GoogleAnalytics } from "@next/third-parties/google"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -63,6 +64,7 @@ export default function RootLayout({
           <Suspense>{children}</Suspense>
         </ThemeProvider>
         <Analytics />
+        <GoogleAnalytics gaId="G-H8JW9EH3HY" />
       </body>
     </html>
   )
