@@ -74,9 +74,8 @@ export const categoriesFromList: Category[] = [
           "Move toward discomfort strategically.",
           "Growth always feels like risk first.",
         ],
-        quote:
-          "If you hear a voice within you say 'you cannot paint,' then by all means paint, and that voice will be silenced.",
-        quoteAuthor: "Vincent van Gogh",
+        quote: "The worst enemy to creativity is self-doubt.",
+        quoteAuthor: "Sylvia Plath",
       },
       {
         id: "mindset-6",
