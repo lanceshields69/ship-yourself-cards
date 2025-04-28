@@ -121,8 +121,8 @@ export const categories: Category[] = [
           "Protect your peak energy hours for creation.",
           "End each day by planning the next.",
         ],
-        quote: "The worst enemy to creativity is self-doubt.",
-        quoteAuthor: "Sylvia Plath",
+        quote: "Either you run the day or the day runs you.",
+        quoteAuthor: "Jim Rohn",
       },
       {
         id: "mindset-6",
