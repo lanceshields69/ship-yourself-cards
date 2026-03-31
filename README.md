@@ -1,13 +1,8 @@
-# Ship Yourself Cards 🚀
-Field Notes for Designers Redesigning Their Careers
+# Ship Yourself Cards 
 
----
+Ship Yourself Cards is a helpful card deck app researched, designed, and coded using AI tools to help designers of all levels build momentum, tell their story, and navigate career transitions with confidence.
 
-**Ship Yourself Cards** is a practical, action-driven card deck app built to help designers (and creative professionals) navigate career transitions, job searches, and reinventions with momentum, creativity, and resilience.
-
-Each card offers tactical moves, mindset shifts, and storytelling strategies — designed to help you build your next chapter, not just chase the next job.
-
-Built with [V0.dev](https://v0.dev/) and [Next.js](https://nextjs.org/).
+Built with: V0.dev, Figma, Chatgpt
 
 <img width="2292" height="2407" alt="image" src="https://github.com/lanceshields69/ship-yourself-cards/blob/main/ship-yourself-cards-preview.webp" />
 
