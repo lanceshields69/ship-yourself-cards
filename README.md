@@ -4,6 +4,8 @@ Ship Yourself Cards is a helpful card deck app researched, designed, and coded u
 
 Built with: V0.dev, Figma, Chatgpt
 
+https://www.shipyourselfcards.com
+
 <img width="2292" height="2407" alt="image" src="https://github.com/lanceshields69/ship-yourself-cards/blob/main/ship-yourself-cards-preview.webp" />
 
 ---
