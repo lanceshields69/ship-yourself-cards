@@ -9,7 +9,7 @@ Each card offers tactical moves, mindset shifts, and storytelling strategies —
 
 Built with [V0.dev](https://v0.dev/) and [Next.js](https://nextjs.org/).
 
-<https://github.com/lanceshields69/ship-yourself-cards/blob/main/ship-yourself-cards-preview.webp>
+<img width="2292" height="2407" alt="image" src="https://github.com/lanceshields69/ship-yourself-cards/blob/main/ship-yourself-cards-preview.webp" />
 
 ---
 
